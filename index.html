@@ -1,0 +1,2283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlowStack — Project Management SaaS</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #ffffff;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        /* Dark mode */
+        body.dark-mode {
+            background: #0f172a;
+            color: #f1f5f9;
+        }
+        body.dark-mode .bg-white {
+            background: #1e293b !important;
+        }
+        body.dark-mode .bg-slate-50 {
+            background: #0f172a !important;
+        }
+        body.dark-mode .text-slate-800 {
+            color: #f1f5f9 !important;
+        }
+        body.dark-mode .text-slate-600 {
+            color: #cbd5e1 !important;
+        }
+        body.dark-mode .text-slate-500 {
+            color: #94a3b8 !important;
+        }
+        body.dark-mode .border-slate-200 {
+            border-color: #334155 !important;
+        }
+        body.dark-mode .border-slate-100 {
+            border-color: #334155 !important;
+        }
+        body.dark-mode .bg-slate-100 {
+            background: #334155 !important;
+        }
+        body.dark-mode .bg-slate-200 {
+            background: #475569 !important;
+        }
+        body.dark-mode .feature-card {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .pricing-card {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .testimonial-card {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .faq-item {
+            border-color: #334155 !important;
+        }
+        body.dark-mode .faq-question {
+            color: #f1f5f9 !important;
+        }
+        body.dark-mode .faq-answer {
+            color: #cbd5e1 !important;
+        }
+        body.dark-mode .navbar-scrolled {
+            background: rgba(15, 23, 42, 0.92) !important;
+        }
+        body.dark-mode .mobile-menu-inner {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .mobile-menu-inner button {
+            color: #f1f5f9 !important;
+        }
+        body.dark-mode .mobile-menu-inner button:hover {
+            background: #334155 !important;
+        }
+        body.dark-mode .dashboard-preview {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .dashboard-card {
+            background: #0f172a !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .ai-chat-area {
+            background: #0f172a !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .ai-chat-bubble-user {
+            background: #6366f1 !important;
+            color: white !important;
+        }
+        body.dark-mode .ai-chat-bubble-ai {
+            background: #334155 !important;
+            color: #f1f5f9 !important;
+        }
+        body.dark-mode .logo-cloud-bg {
+            background: #0f172a !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .cta-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%) !important;
+        }
+        body.dark-mode .footer {
+            background: #0f172a !important;
+        }
+        body.dark-mode .footer .border-slate-800 {
+            border-color: #334155 !important;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6366f1;
+            border-radius: 8px;
+        }
+        body.dark-mode ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        /* Navbar transition */
+        .navbar-transition {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .navbar-scrolled {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+        }
+        body.dark-mode .navbar-scrolled {
+            background: rgba(15, 23, 42, 0.92) !important;
+        }
+
+        /* Feature card hover */
+        .feature-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #f1f5f9;
+        }
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.12);
+            border-color: #e0e7ff;
+        }
+
+        /* Pricing card */
+        .pricing-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #f1f5f9;
+        }
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+        .pricing-card.popular {
+            border-color: #6366f1;
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.18);
+            position: relative;
+        }
+        .pricing-card.popular::before {
+            content: '⭐ Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #6366f1;
+            color: white;
+            padding: 4px 20px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        /* Toggle switch */
+        .toggle-switch {
+            position: relative;
+            width: 52px;
+            height: 28px;
+            background: #e2e8f0;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            flex-shrink: 0;
+        }
+        .toggle-switch.active {
+            background: #6366f1;
+        }
+        .toggle-switch .toggle-knob {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        .toggle-switch.active .toggle-knob {
+            transform: translateX(24px);
+        }
+
+        /* FAQ accordion */
+        .faq-item {
+            border-bottom: 1px solid #f1f5f9;
+            overflow: hidden;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-question {
+            cursor: pointer;
+            padding: 18px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background: transparent;
+            border: none;
+            text-align: left;
+            font-weight: 600;
+            color: #0f172a;
+            transition: color 0.2s;
+            gap: 16px;
+        }
+        .faq-question:hover {
+            color: #6366f1;
+        }
+        .faq-question .faq-icon {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        .faq-question.open .faq-icon {
+            transform: rotate(180deg);
+            color: #6366f1;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, padding 0.3s ease;
+            opacity: 0;
+            padding: 0 0 0 0;
+            color: #475569;
+            line-height: 1.7;
+        }
+        .faq-answer.open {
+            max-height: 300px;
+            opacity: 1;
+            padding: 0 0 20px 0;
+        }
+
+        /* Logo cloud grayscale hover */
+        .logo-item {
+            filter: grayscale(1) brightness(0.6);
+            transition: all 0.3s ease;
+            opacity: 0.6;
+            cursor: default;
+        }
+        .logo-item:hover {
+            filter: grayscale(0) brightness(1);
+            opacity: 1;
+        }
+
+        /* Hero mockup shadow */
+        .mockup-shadow {
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Trust badge pulse */
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #f1f5f9;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* CTA section gradient */
+        .cta-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: #cbd5e1;
+        }
+        .footer a {
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+        .footer a:hover {
+            color: white;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.7s ease forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .delay-100 {
+            animation-delay: 0.1s;
+        }
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+        .delay-300 {
+            animation-delay: 0.3s;
+        }
+        .delay-400 {
+            animation-delay: 0.4s;
+        }
+        .delay-500 {
+            animation-delay: 0.5s;
+        }
+
+        /* Floating cards */
+        .float-card {
+            animation: float 6s ease-in-out infinite;
+        }
+        .float-card:nth-child(2) {
+            animation-delay: 2s;
+        }
+        .float-card:nth-child(3) {
+            animation-delay: 4s;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(1deg);
+            }
+        }
+
+        /* Parallax container */
+        .parallax-container {
+            perspective: 1000px;
+        }
+        .parallax-card {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        /* Dashboard preview */
+        .dashboard-preview {
+            background: #f8fafc;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+        .dashboard-card {
+            background: white;
+            border-radius: 14px;
+            border: 1px solid #f1f5f9;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Chart bars */
+        .chart-bar {
+            transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 0;
+        }
+        .chart-bar.animate {
+            height: var(--height);
+        }
+
+        /* Counter */
+        .counter-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #6366f1;
+        }
+        body.dark-mode .counter-value {
+            color: #818cf8;
+        }
+
+        /* AI Chat */
+        .ai-chat-area {
+            background: #f8fafc;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+        .ai-chat-bubble-user {
+            background: #6366f1;
+            color: white;
+            border-radius: 16px 16px 4px 16px;
+            padding: 10px 16px;
+            max-width: 80%;
+            align-self: flex-end;
+        }
+        .ai-chat-bubble-ai {
+            background: white;
+            color: #0f172a;
+            border-radius: 16px 16px 16px 4px;
+            padding: 10px 16px;
+            max-width: 80%;
+            align-self: flex-start;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        body.dark-mode .ai-chat-bubble-ai {
+            background: #1e293b;
+            color: #f1f5f9;
+            border-color: #334155;
+        }
+
+        /* Typing indicator */
+        .typing-dots span {
+            animation: typingDot 1.4s infinite both;
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #94a3b8;
+            margin: 0 2px;
+        }
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typingDot {
+            0%,
+            80%,
+            100% {
+                transform: scale(0.6);
+                opacity: 0.4;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Dark mode toggle button */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #f1f5f9;
+        }
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        body.dark-mode .theme-toggle {
+            color: #f1f5f9;
+        }
+        .theme-toggle.light {
+            color: #0f172a;
+        }
+        body.dark-mode .theme-toggle.light {
+            color: #f1f5f9;
+        }
+        .theme-toggle.light:hover {
+            background: rgba(0, 0, 0, 0.06);
+        }
+        body.dark-mode .theme-toggle.light:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-mockup {
+                margin-top: 2rem;
+            }
+            .pricing-card.popular {
+                margin-top: 1.5rem;
+            }
+            .pricing-card.popular::before {
+                top: -12px;
+                font-size: 0.6rem;
+                padding: 3px 14px;
+            }
+            .counter-value {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Logo SVG styling */
+        .logo-svg {
+            width: 40px;
+            height: 40px;
+        }
+        .logo-svg .bg-grad {
+            fill: url(#logoGrad);
+        }
+        .logo-svg .fg-grad {
+            fill: url(#logoFg);
+        }
+
+        /* Notification dot pulse */
+        .notif-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ef4444;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.6;
+            }
+        }
+
+        /* Activity feed */
+        .activity-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        body.dark-mode .activity-item {
+            border-color: #334155;
+        }
+        .activity-item .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.7rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        /* Scroll-based navbar */
+        .navbar-transition {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <!-- ===== REACT + ROUTER via CDN ===== -->
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js">
+    </script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js">
+    </script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js">
+    </script>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+        // ============================================================
+        //  DATA
+        // ============================================================
+        const FEATURES = [{
+            id: 1,
+            icon: 'fa-th-large',
+            title: 'Smart Task Boards',
+            description: 'Drag-and-drop boards that adapt to how your team actually works. Customize workflows in seconds.'
+        }, {
+            id: 2,
+            icon: 'fa-clock',
+            title: 'Automated Deadlines',
+            description: 'Set it once, FlowStack reminds everyone automatically. No more missed due dates or frantic emails.'
+        }, {
+            id: 3,
+            icon: 'fa-comments',
+            title: 'Built-in Team Chat',
+            description: 'Stop switching between five different apps to get one answer. Everything lives inside FlowStack.'
+        }, {
+            id: 4,
+            icon: 'fa-chart-line',
+            title: 'Real-Time Analytics',
+            description: 'See exactly where projects stand, without asking anyone. Data-driven decisions made simple.'
+        }, {
+            id: 5,
+            icon: 'fa-plug',
+            title: '50+ Integrations',
+            description: 'Connect Slack, Gmail, Zoom, Google Drive, Notion, and 45+ more in one click.'
+        }, {
+            id: 6,
+            icon: 'fa-shield-alt',
+            title: 'Enterprise-Grade Security',
+            description: 'Bank-level 256-bit encryption, so your data stays yours. SOC2 compliant and GDPR ready.'
+        }, ];
+
+        const STEPS = [
+            { id: 1, title: 'Sign Up', desc: 'Create your workspace in under 60 seconds. No credit card required to start.' },
+            { id: 2, title: 'Invite Your Team', desc: 'Add members, assign roles, and set up projects in minutes.' },
+            { id: 3, title: 'Launch & Track', desc: 'Watch progress in real-time, from anywhere. Stay aligned and ahead.' },
+        ];
+
+        const PRICING_PLANS = [{
+            id: 'starter',
+            name: 'Starter',
+            monthly: 9,
+            yearly: 90,
+            users: 'Up to 5 users',
+            projects: '3 projects',
+            support: 'Basic support',
+            analytics: false,
+            custom: false,
+            popular: false,
+            cta: 'Start Free Trial',
+            features: ['Up to 5 users', '3 projects', 'Basic support', 'Task boards', 'Team chat'],
+        }, {
+            id: 'pro',
+            name: 'Pro',
+            monthly: 29,
+            yearly: 290,
+            users: 'Up to 25 users',
+            projects: 'Unlimited projects',
+            support: 'Priority support',
+            analytics: true,
+            custom: false,
+            popular: true,
+            cta: 'Start Free Trial',
+            features: ['Up to 25 users', 'Unlimited projects', 'Priority support', 'Advanced analytics',
+                '50+ integrations', 'Custom workflows'
+            ],
+        }, {
+            id: 'enterprise',
+            name: 'Enterprise',
+            monthly: null,
+            yearly: null,
+            users: 'Unlimited users',
+            projects: 'Unlimited projects',
+            support: 'Dedicated manager',
+            analytics: true,
+            custom: true,
+            popular: false,
+            cta: 'Contact Sales',
+            features: ['Unlimited users', 'Unlimited projects', 'Dedicated account manager',
+                'Custom integrations', 'SLA guarantee', 'On-premise option'
+            ],
+        }, ];
+
+        const TESTIMONIALS = [{
+            id: 1,
+            quote: 'FlowStack cut our project delays by half. It\'s the first tool our whole team actually enjoys using.',
+            name: 'Sarah Mitchell',
+            role: 'Operations Lead',
+            company: 'Nexora',
+            image: 'https://randomuser.me/api/portraits/women/44.jpg',
+        }, {
+            id: 2,
+            quote: 'We tried five different tools before FlowStack. This is the one that finally stuck.',
+            name: 'David Okafor',
+            role: 'Founder',
+            company: 'Bramble Labs',
+            image: 'https://randomuser.me/api/portraits/men/32.jpg',
+        }, {
+            id: 3,
+            quote: 'The analytics dashboard alone is worth the subscription. We\'ve never had this much visibility.',
+            name: 'Priya Nair',
+            role: 'Product Manager',
+            company: 'Vertex Studio',
+            image: 'https://randomuser.me/api/portraits/women/68.jpg',
+        }, ];
+
+        const FAQS = [{
+            id: 1,
+            q: 'Is there a free trial?',
+            a: 'Yes! You get 14 days of full access, with no credit card required. Cancel anytime during the trial — no strings attached.'
+        }, {
+            id: 2,
+            q: 'Can I cancel anytime?',
+            a: 'Absolutely. There are no long-term contracts or hidden fees. You can cancel your subscription at any time from your account settings.'
+        }, {
+            id: 3,
+            q: 'Does FlowStack work for remote teams?',
+            a: 'Yes — FlowStack was built specifically for distributed teams. With real-time chat, file sharing, and live project tracking, everyone stays in sync no matter where they are.'
+        }, {
+            id: 4,
+            q: 'What integrations are supported?',
+            a: 'FlowStack connects with Slack, Gmail, Zoom, Google Drive, Notion, GitHub, Figma, and 45+ more. New integrations are added every month.'
+        }, {
+            id: 5,
+            q: 'Is my data secure?',
+            a: 'Yes. We use bank-level 256-bit encryption for all data in transit and at rest. FlowStack is SOC2 Type II compliant and GDPR ready.'
+        }, ];
+
+        const LOGOS = [
+            { name: 'Nexora', icon: 'fa-building' },
+            { name: 'Bramble Labs', icon: 'fa-flask' },
+            { name: 'Vertex Studio', icon: 'fa-cube' },
+            { name: 'Orbitly', icon: 'fa-rocket' },
+            { name: 'Havenwork', icon: 'fa-home' },
+            { name: 'Clarico', icon: 'fa-chart-pie' },
+        ];
+
+        // AI responses
+        const AI_RESPONSES = {
+            'sales today': '📊 Today\'s sales increased by <strong>18%</strong> compared to yesterday. Total: $24,580 💰',
+            'revenue': '📈 Current MRR: $84,200. Up 12% month-over-month. 🚀',
+            'tasks': '✅ You have 14 tasks pending, 8 in progress, and 32 completed this week.',
+            'team': '👥 8 team members online right now. 3 are in meetings, 5 are available.',
+            'deadline': '⏰ 2 deadlines approaching in the next 48 hours: "Q4 Report" and "Client Demo".',
+            'hello': '👋 Hello! How can I help you with your project management today?',
+            'hi': '👋 Hi there! Ready to boost your team\'s productivity? Ask me anything about FlowStack.',
+            'help': '💡 You can ask me about: sales, revenue, tasks, team, deadlines, or general questions!',
+        };
+
+        const DEFAULT_AI_RESPONSE = '🤔 I\'m not sure about that. Try asking about: sales, revenue, tasks, team, or deadlines.';
+
+        // ============================================================
+        //  COMPONENTS
+        // ============================================================
+
+        // --- Logo SVG (Technical & Attractive) ---
+        function Logo() {
+            return ( <
+                svg className = "logo-svg"
+                viewBox = "0 0 80 80"
+                fill = "none"
+                xmlns = "http://www.w3.org/2000/svg" >
+                <
+                defs >
+                <
+                linearGradient id = "logoGrad"
+                x1 = "0"
+                y1 = "0"
+                x2 = "80"
+                y2 = "80" >
+                <
+                stop offset = "0%"
+                stopColor = "#6366f1" / >
+                <
+                stop offset = "100%"
+                stopColor = "#8b5cf6" / >
+                <
+                /linearGradient> <
+                linearGradient id = "logoFg"
+                x1 = "20"
+                y1 = "20"
+                x2 = "60"
+                y2 = "60" >
+                <
+                stop offset = "0%"
+                stopColor = "#ffffff" / >
+                <
+                stop offset = "100%"
+                stopColor = "#e0e7ff" / >
+                <
+                /linearGradient> <
+                /defs> <
+                rect width = "80"
+                height = "80"
+                rx = "20"
+                className = "bg-grad" / >
+                <
+                path d = "M26 28 L54 28 L54 34 L26 34 L26 28 Z M26 38 L48 38 L48 44 L26 44 L26 38 Z M26 48 L42 48 L42 54 L26 54 L26 48 Z M58 30 L68 40 L58 50 L58 30 Z"
+                className = "fg-grad"
+                opacity = "0.9" / >
+                <
+                path d = "M34 26 L46 26 L46 56 L34 56 L34 26 Z"
+                className = "fg-grad"
+                opacity = "0.6" / >
+                <
+                circle cx = "58"
+                cy = "40"
+                r = "6"
+                className = "fg-grad"
+                opacity = "0.8" / >
+                <
+                /svg>
+            );
+        }
+
+        // --- Navbar ---
+        function Navbar({ scrollY, isDark, toggleDark }) {
+            const [mobileOpen, setMobileOpen] = useState(false);
+            const isScrolled = scrollY > 40;
+
+            const links = [
+                { label: 'Features', href: '#features' },
+                { label: 'Pricing', href: '#pricing' },
+                { label: 'Testimonials', href: '#testimonials' },
+                { label: 'FAQ', href: '#faq' },
+                { label: 'Dashboard', href: '#dashboard' },
+            ];
+
+            const scrollTo = (id) => {
+                const el = document.querySelector(id);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                setMobileOpen(false);
+            };
+
+            const textColor = isScrolled ? (isDark ? 'text-white' : 'text-slate-800') : 'text-white';
+            const textColorMuted = isScrolled ? (isDark ? 'text-white/70' : 'text-slate-600') : 'text-white/80';
+
+            return ( <
+                header className = { `fixed top-0 left-0 w-full z-50 navbar-transition ${isScrolled ? 'navbar-scrolled' : 'bg-transparent'}` } >
+                <
+                div className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
+                <
+                div className = "flex items-center justify-between h-16 md:h-20" >
+                <
+                div className = "flex items-center gap-2.5 cursor-pointer"
+                onClick = {
+                    () => window.scrollTo({ top: 0, behavior: 'smooth' }) } >
+                <
+                Logo / >
+                <
+                span className = { `text-xl font-extrabold tracking-tight transition-colors ${textColor}` } >
+                Flow < span className = "text-indigo-500" > Stack < /span> <
+                /span> <
+                /div>
+
+                <
+                nav className = "hidden md:flex items-center gap-1" > {
+                    links.map((link) => ( <
+                        button key = { link.label }
+                        onClick = {
+                            () => scrollTo(link.href) }
+                        className = { `px-4 py-2 rounded-lg font-medium text-sm transition-all ${isScrolled ?
+                                    (isDark ? 'text-white/70 hover:text-white hover:bg-white/10' : 'text-slate-600 hover:bg-slate-100 hover:text-indigo-600') :
+                                    'text-white/80 hover:text-white hover:bg-white/10'
+                                }` } >
+                        { link.label } <
+                        /button>
+                    ))
+                } <
+                /nav>
+
+                <
+                div className = "hidden md:flex items-center gap-3" >
+                <
+                button onClick = { toggleDark }
+                className = { `theme-toggle ${!isScrolled ? '' : 'light'}` } >
+                <
+                i className = { `fas ${isDark ? 'fa-sun' : 'fa-moon'}` } > < /i> <
+                /button> <
+                button onClick = {
+                    () => scrollTo('#pricing') }
+                className = { `px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${isScrolled ?
+                            (isDark ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md shadow-indigo-500/30' : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md shadow-indigo-200') :
+                            'bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm border border-white/20'
+                        }` } >
+                <
+                i className = "fas fa-rocket mr-2" > < /i> Get Started <
+                /button> <
+                /div>
+
+                <
+                button onClick = {
+                    () => setMobileOpen(!mobileOpen) }
+                className = { `md:hidden p-2 rounded-lg transition-colors ${isScrolled ? (isDark ? 'text-white hover:bg-white/10' : 'text-slate-700 hover:bg-slate-100') : 'text-white hover:bg-white/10'
+                        }` } >
+                <
+                i className = { `fas ${mobileOpen ? 'fa-times' : 'fa-bars'} text-xl` } > < /i> <
+                /button> <
+                /div>
+
+                <
+                div className = { `md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileOpen ? 'max-h-[500px] opacity-100 pb-4' : 'max-h-0 opacity-0'}` } >
+                <
+                div className = { `mobile-menu-inner flex flex-col gap-1 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-slate-200/60 dark:border-slate-700/60` } >
+                <
+                button onClick = { toggleDark }
+                className = "flex items-center gap-2 px-4 py-3 rounded-lg text-slate-700 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 font-medium text-sm transition" >
+                <
+                i className = { `fas ${isDark ? 'fa-sun' : 'fa-moon'}` } > < /i> { isDark ? 'Light Mode' : 'Dark Mode' } <
+                /button> {
+                    links.map((link) => ( <
+                        button key = { link.label }
+                        onClick = {
+                            () => scrollTo(link.href) }
+                        className = "px-4 py-3 rounded-lg text-slate-700 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 font-medium text-sm text-left transition" >
+                        { link.label } <
+                        /button>
+                    ))
+                } <
+                button onClick = {
+                    () => { scrollTo('#pricing');
+                        setMobileOpen(false); } }
+                className = "mt-2 bg-indigo-600 text-white px-5 py-3 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition text-center" >
+                <
+                i className = "fas fa-rocket mr-2" > < /i> Get Started <
+                /button> <
+                /div> <
+                /div> <
+                /div> <
+                /header>
+            );
+        }
+
+        // --- Hero ---
+        function Hero({ isDark }) {
+            const [isDemoOpen, setIsDemoOpen] = useState(false);
+
+            return ( <
+                    section className = { `relative min-h-screen flex items-center overflow-hidden pt-20 ${isDark ? 'bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900' : 'bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900'}` } >
+                    <
+                    div className = "absolute inset-0 opacity-10" >
+                    <
+                    div className = "absolute top-20 left-10 w-72 h-72 bg-indigo-500 rounded-full blur-3xl" > < /div> <
+                    div className = "absolute bottom-10 right-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl" > < /div> <
+                    div className = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-400 rounded-full blur-3xl opacity-20" > <
+                    /div> <
+                    /div>
+
+                    <
+                    div className = "relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" >
+                    <
+                    div className = "grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center" >
+                    <
+                    div className = "fade-in" >
+                    <
+                    div className = "inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm px-4 py-2 rounded-full border border-white/10 mb-6" >
+                    <
+                    i className = "fas fa-bolt text-indigo-300" > < /i> <
+                    span > # 1 Project Management Tool for Teams < /span> <
+                    /div>
+
+                    <
+                    h1 className = "text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight" >
+                    Manage Projects < br / >
+                    <
+                    span className = "bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent" >
+                    Without the Chaos <
+                    /span> <
+                    /h1>
+
+                    <
+                    p className = "text-slate-300 text-lg sm:text-xl mt-5 max-w-lg leading-relaxed" >
+                    FlowStack brings your team 's tasks, deadlines, and conversations into one clean workspace — so nothing falls through the cracks. <
+                    /p>
+
+                    <
+                    div className = "flex flex-wrap gap-4 mt-8" >
+                    <
+                    button onClick = {
+                        () => document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' }) }
+                    className = "bg-indigo-600 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/30 flex items-center gap-2" >
+                    <
+                    i className = "fas fa-rocket" > < /i> Start Free Trial <
+                    /button> <
+                    button onClick = {
+                        () => setIsDemoOpen(true) }
+                    className = "bg-white/10 text-white px-8 py-3.5 rounded-full font-medium hover:bg-white/20 transition border border-white/20 backdrop-blur-sm flex items-center gap-2" >
+                    <
+                    i className = "fas fa-play-circle" > < /i> Watch Demo <
+                    /button> <
+                    /div>
+
+                    <
+                    div className = "flex flex-wrap items-center gap-4 mt-6" >
+                    <
+                    span className = "trust-badge" >
+                    <
+                    i className = "fas fa-check-circle text-indigo-300" > < /i> No credit card required <
+                    /span> <
+                    span className = "trust-badge" >
+                    <
+                    i className = "fas fa-clock text-indigo-300" > < /i> 14 - day free trial <
+                    /span> <
+                    span className = "trust-badge" >
+                    <
+                    i className = "fas fa-users text-indigo-300" > < /i> Trusted by 12, 000 + teams <
+                    /span> <
+                    /div> <
+                    /div>
+
+                    <
+                    div className = "fade-in delay-200 hero-mockup" >
+                    <
+                    div className = "mockup-shadow rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm" >
+                    <
+                    div className = "bg-slate-800/80 p-3 flex items-center gap-2 border-b border-white/5" >
+                    <
+                    div className = "flex gap-1.5" >
+                    <
+                    span className = "w-3 h-3 bg-red-500 rounded-full" > < /span> <
+                    span className = "w-3 h-3 bg-yellow-500 rounded-full" > < /span> <
+                    span className = "w-3 h-3 bg-green-500 rounded-full" > < /span> <
+                    /div> <
+                    div className = "flex-1 text-center text-slate-400 text-xs font-medium" > FlowStack · My Workspace < /div> <
+                    div className = "w-16" > < /div> <
+                    /div> <
+                    div className = "p-4 sm:p-6 bg-white/5" >
+                    <
+                    img src = "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=500&fit=crop&q=80"
+                    alt = "FlowStack Dashboard Mockup"
+                    className = "rounded-lg w-full object-cover border border-white/5"
+                    style = { { height: '280px', objectFit: 'cover' } }
+                    /> <
+                    div className = "grid grid-cols-4 gap-2 mt-3" >
+                    <
+                    div className = "bg-indigo-500/20 rounded-lg p-2 text-center" >
+                    <
+                    div className = "text-white text-xs font-medium" > Tasks < /div> <
+                    div className = "text-indigo-300 text-sm font-bold" > 24 < /div> <
+                    /div> <
+                    div className = "bg-emerald-500/20 rounded-lg p-2 text-center" >
+                    <
+                    div className = "text-white text-xs font-medium" > Done < /div> <
+                    div className = "text-emerald-300 text-sm font-bold" > 18 < /div> <
+                    /div> <
+                    div className = "bg-amber-500/20 rounded-lg p-2 text-center" >
+                    <
+                    div className = "text-white text-xs font-medium" > In Progress < /div> <
+                    div className = "text-amber-300 text-sm font-bold" > 6 < /div> <
+                    /div> <
+                    div className = "bg-purple-500/20 rounded-lg p-2 text-center" >
+                    <
+                    div className = "text-white text-xs font-medium" > Team < /div> <
+                    div className = "text-purple-300 text-sm font-bold" > 8 < /div> <
+                    /div> <
+                    /div> <
+                    /div> <
+                    /div> <
+                    /div> <
+                    /div> <
+                    /div>
+
+                    {
+                        /* Demo Modal */
+                        isDemoOpen && ( <
+                            div className = "fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                            onClick = {
+                                () => setIsDemoOpen(false) } >
+                            <
+                            div className = "bg-white dark:bg-slate-800 rounded-2xl max-w-3xl w-full p-6 shadow-2xl relative"
+                            onClick = {
+                                (e) => e.stopPropagation() } >
+                            <
+                            button onClick = {
+                                () => setIsDemoOpen(false) }
+                            className = "absolute top-4 right-4 text-slate-400 hover:text-slate-700 dark:hover:text-white transition" >
+                            <
+                            i className = "fas fa-times text-xl" > < /i> <
+                            /button> <
+                            h3 className = "text-2xl font-bold text-slate-800 dark:text-white mb-4" >
+                            <
+                            i className = "fas fa-play-circle text-indigo-600 mr-2" > < /i> Product Demo <
+                            /h3> <
+                            div className = "aspect-video bg-slate-900 rounded-xl flex items-center justify-center" >
+                            <
+                            div className = "text-center text-slate-400" >
+                            <
+                            i className = "fas fa-play-circle text-6xl text-indigo-500 mb-4" > < /i> <
+                            p className = "text-lg font-medium text-white" > FlowStack in Action < /p> <
+                            p className = "text-sm" > Watch how teams ship faster with FlowStack. < /p> <
+                            /div> <
+                            /div> <
+                            div className = "flex justify-end mt-4" >
+                            <
+                            button onClick = {
+                                () => setIsDemoOpen(false) }
+                            className = "bg-indigo-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition" >
+                            Close <
+                            /button> <
+                            /div> <
+                            /div> <
+                            /div>
+                        )
+                    } <
+                    /section>
+                );
+            }
+
+            // --- Logo Cloud ---
+            function LogoCloud({ isDark }) {
+                return ( <
+                        section className = { `py-12 ${isDark ? 'bg-slate-900/50' : 'bg-slate-50'} border-y ${isDark ? 'border-slate-700' : 'border-slate-200/50'}` } >
+                        <
+                        div className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
+                        <
+                        p className = { `text-center text-sm font-medium uppercase tracking-wider mb-8 ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                        Trusted by teams at: <
+                        /p> <
+                        div className = "flex flex-wrap justify-center items-center gap-8 md:gap-12 lg:gap-16" > {
+                            LOGOS.map((logo, idx) => ( <
+                                div key = { idx }
+                                className = { `logo-item flex items-center gap-2.5 text-lg font-semibold ${isDark ? 'text-slate-500' : 'text-slate-400'}` } >
+                                <
+                                i className = { `fas ${logo.icon} text-indigo-400 text-xl` } > < /i> <
+                                span > { logo.name } < /span> <
+                                /div>
+                            ))
+                        } <
+                        /div> <
+                        /div> <
+                        /section>
+                    );
+                }
+
+                // --- Features ---
+                function FeaturesSection({ isDark }) {
+                    return ( <
+                            section id = "features"
+                            className = { `py-20 scroll-mt-16 ${isDark ? 'bg-slate-900' : 'bg-white'}` } >
+                            <
+                            div className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
+                            <
+                            div className = "text-center max-w-2xl mx-auto mb-16" >
+                            <
+                            span className = "text-indigo-600 font-semibold text-sm uppercase tracking-wider" > Features < /span> <
+                            h2 className = { `text-3xl sm:text-4xl font-extrabold mt-1 ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                            Everything you need to ship faster <
+                            /h2> <
+                            p className = { `mt-3 text-lg ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                            FlowStack combines powerful project management with the simplicity your team actually wants. <
+                            /p> <
+                            /div>
+
+                            <
+                            div className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" > {
+                                FEATURES.map((feature, idx) => ( <
+                                    div key = { feature.id }
+                                    className = { `feature-card rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all ${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'}` }
+                                    style = { { animationDelay: `${idx * 0.1}s` } } >
+                                    <
+                                    div className = { `w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4 ${isDark ? 'bg-indigo-900/40 text-indigo-400' : 'bg-indigo-50 text-indigo-600'}` } >
+                                    <
+                                    i className = { `fas ${feature.icon}` } > < /i> <
+                                    /div> <
+                                    h3 className = { `text-lg font-bold ${isDark ? 'text-white' : 'text-slate-800'}` } > { feature
+                                            .title } < /h3> <
+                                    p className = { `text-sm mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                    { feature.description } <
+                                    /p> <
+                                    /div>
+                                ))
+                            } <
+                            /div> <
+                            /div> <
+                            /section>
+                        );
+                    }
+
+                    // --- How It Works ---
+                    function HowItWorks({ isDark }) {
+                        return ( <
+                                section className = { `py-20 ${isDark ? 'bg-slate-800/50' : 'bg-slate-50'}` } >
+                                <
+                                div className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
+                                <
+                                div className = "text-center max-w-2xl mx-auto mb-16" >
+                                <
+                                span className = "text-indigo-600 font-semibold text-sm uppercase tracking-wider" > How It Works <
+                                /span> <
+                                h2 className = { `text-3xl sm:text-4xl font-extrabold mt-1 ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                Get started in 3 simple steps <
+                                /h2> <
+                                p className = { `mt-3 text-lg ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                From sign - up to full team sync—you 'll be up and running in minutes. <
+                                /p> <
+                                /div>
+
+                                <
+                                div className = "grid grid-cols-1 md:grid-cols-3 gap-8 relative" >
+                                <
+                                div className = "hidden md:block absolute top-20 left-1/3 right-1/3 h-0.5 bg-indigo-200 dark:bg-indigo-800 -translate-y-1/2" > <
+                                /div> {
+                                    STEPS.map((step, idx) => ( <
+                                        div key = { step.id }
+                                        className = "relative text-center" >
+                                        <
+                                        div className = "w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mx-auto mb-5 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 relative z-10" >
+                                        { step.id } <
+                                        /div> <
+                                        h3 className = { `text-xl font-bold ${isDark ? 'text-white' : 'text-slate-800'}` } > { step
+                                                .title } < /h3> <
+                                        p className = { `text-sm mt-2 max-w-xs mx-auto leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                        { step.desc } <
+                                        /p> <
+                                        /div>
+                                    ))
+                                } <
+                                /div> <
+                                /div> <
+                                /section>
+                            );
+                        }
+
+                        // --- Pricing ---
+                        function PricingSection({ isDark }) {
+                            const [isYearly, setIsYearly] = useState(false);
+
+                            const getPrice = (plan) => {
+                                if (plan.id === 'enterprise') return 'Custom';
+                                return isYearly ? `$${plan.yearly}/yr` : `$${plan.monthly}/mo`;
+                            };
+
+                            const getPeriod = (plan) => {
+                                if (plan.id === 'enterprise') return '';
+                                return isYearly ? 'billed annually' : 'billed monthly';
+                            };
+
+                            return ( <
+                                    section id = "pricing"
+                                    className = { `py-20 scroll-mt-16 ${isDark ? 'bg-slate-900' : 'bg-white'}` } >
+                                    <
+                                    div className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
+                                    <
+                                    div className = "text-center max-w-2xl mx-auto mb-12" >
+                                    <
+                                    span className = "text-indigo-600 font-semibold text-sm uppercase tracking-wider" > Pricing <
+                                    /span> <
+                                    h2 className = { `text-3xl sm:text-4xl font-extrabold mt-1 ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                    Simple, transparent pricing <
+                                    /h2> <
+                                    p className = { `mt-3 text-lg ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                    Choose the plan that fits your team.Upgrade or downgrade anytime. <
+                                    /p>
+
+                                    <
+                                    div className = "flex items-center justify-center gap-4 mt-6" >
+                                    <
+                                    span className = { `text-sm font-medium transition-colors ${!isYearly ? (isDark ? 'text-white' : 'text-slate-800') : (isDark ? 'text-slate-500' : 'text-slate-400')}` } >
+                                    Monthly <
+                                    /span> <
+                                    div className = { `toggle-switch ${isYearly ? 'active' : ''}` }
+                                    onClick = {
+                                        () => setIsYearly(!isYearly) }
+                                    role = "button"
+                                    tabIndex = { 0 } >
+                                    <
+                                    div className = "toggle-knob" > < /div> <
+                                    /div> <
+                                    span className = { `text-sm font-medium transition-colors ${isYearly ? (isDark ? 'text-white' : 'text-slate-800') : (isDark ? 'text-slate-500' : 'text-slate-400')}` } >
+                                    Yearly < span className = "text-emerald-600 text-xs font-semibold ml-1" > Save 17 % < /span> <
+                                    /span> <
+                                    /div> <
+                                    /div>
+
+                                    <
+                                    div className = "grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto" > {
+                                        PRICING_PLANS.map((plan) => ( <
+                                            div key = { plan.id }
+                                            className = { `pricing-card rounded-2xl p-6 md:p-8 shadow-sm ${plan.popular ? 'popular border-2 border-indigo-500' : (isDark ? 'border-slate-700 bg-slate-800' : 'border-slate-200 bg-white')
+                                                }` } >
+                                            {
+                                                plan.popular && ( <
+                                                    div className = "text-center mb-4 text-xs font-semibold text-indigo-600 uppercase tracking-wider" >
+                                                    Most Popular <
+                                                    /div>
+                                                )
+                                            } <
+                                            h3 className = { `text-xl font-bold ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                            { plan.name } <
+                                            /h3> <
+                                            div className = "mt-2" > {
+                                                plan.id === 'enterprise' ? ( <
+                                                    span className = { `text-3xl font-extrabold ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                                    Custom <
+                                                    /span>
+                                                ) : ( <
+                                                    span className = { `text-4xl font-extrabold price-number ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                                    { getPrice(plan) } <
+                                                    /span>
+                                                )
+                                            } {
+                                                plan.id !== 'enterprise' && ( <
+                                                    span className = { `text-sm ml-1.5 ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                                    { getPeriod(plan) } <
+                                                    /span>
+                                                )
+                                            } <
+                                            /div>
+
+                                            <
+                                            ul className = "mt-5 space-y-2.5 text-sm" > {
+                                                plan.features.map((f, i) => ( <
+                                                    li key = { i }
+                                                    className = { `flex items-center gap-2.5 ${isDark ? 'text-slate-300' : 'text-slate-600'}` } >
+                                                    <
+                                                    i className = "fas fa-check text-indigo-500 text-xs" > < /i> <
+                                                    span > { f } < /span> <
+                                                    /li>
+                                                ))
+                                            } <
+                                            /ul>
+
+                                            <
+                                            button onClick = {
+                                                () => {
+                                                    if (plan.id === 'enterprise') {
+                                                        alert('Contact our sales team for a custom quote!');
+                                                    } else {
+                                                        alert(`Starting your ${plan.name} free trial!`);
+                                                    }
+                                                } }
+                                            className = { `w-full mt-6 py-3 rounded-xl font-semibold transition ${plan.popular ?
+                                                        'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md shadow-indigo-200 dark:shadow-indigo-900/30' :
+                                                        (isDark ? 'bg-slate-700 text-white hover:bg-slate-600' : 'bg-slate-100 text-slate-700 hover:bg-slate-200')
+                                                    }` } >
+                                            { plan.cta } <
+                                            /button> <
+                                            /div>
+                                        ))
+                                    } <
+                                    /div> <
+                                    /div> <
+                                    /section>
+                                );
+                            }
+
+                            // --- Testimonials ---
+                            function TestimonialsSection({ isDark }) {
+                                return ( <
+                                        section id = "testimonials"
+                                        className = { `py-20 scroll-mt-16 ${isDark ? 'bg-slate-800/50' : 'bg-slate-50'}` } >
+                                        <
+                                        div className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
+                                        <
+                                        div className = "text-center max-w-2xl mx-auto mb-16" >
+                                        <
+                                        span className = "text-indigo-600 font-semibold text-sm uppercase tracking-wider" >
+                                        Testimonials <
+                                        /span> <
+                                        h2 className = { `text-3xl sm:text-4xl font-extrabold mt-1 ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                        Loved by teams everywhere <
+                                        /h2> <
+                                        p className = { `mt-3 text-lg ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                        Real stories from real people who transformed how they work. <
+                                        /p> <
+                                        /div>
+
+                                        <
+                                        div className = "grid grid-cols-1 md:grid-cols-3 gap-6" > {
+                                            TESTIMONIALS.map((t) => ( <
+                                                div key = { t.id }
+                                                className = { `rounded-2xl p-6 shadow-sm transition hover:shadow-md ${isDark ? 'bg-slate-800 border border-slate-700' : 'bg-white border border-slate-200/60'
+                                                    }` } >
+                                                <
+                                                div className = "flex items-center gap-1 text-yellow-400 text-sm mb-3" >
+                                                <
+                                                i className = "fas fa-star" > < /i> <
+                                                i className = "fas fa-star" > < /i> <
+                                                i className = "fas fa-star" > < /i> <
+                                                i className = "fas fa-star" > < /i> <
+                                                i className = "fas fa-star" > < /i> <
+                                                /div> <
+                                                p className = { `text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}` } >
+                                                "{t.quote}" <
+                                                /p> <
+                                                div className = { `flex items-center gap-3 mt-4 pt-4 ${isDark ? 'border-slate-700' : 'border-slate-100'} border-t` } >
+                                                <
+                                                img src = { t.image }
+                                                alt = { t.name }
+                                                className = "w-10 h-10 rounded-full object-cover border-2 border-indigo-100 dark:border-indigo-800" /
+                                                >
+                                                <
+                                                div >
+                                                <
+                                                p className = { `font-semibold text-sm ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                                { t.name } <
+                                                /p> <
+                                                p className = { `text-xs ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                                { t.role } · { t.company } <
+                                                /p> <
+                                                /div> <
+                                                /div> <
+                                                /div>
+                                            ))
+                                        } <
+                                        /div> <
+                                        /div> <
+                                        /section>
+                                    );
+                                }
+
+                                // --- FAQ ---
+                                function FAQSection({ isDark }) {
+                                    const [openId, setOpenId] = useState(null);
+
+                                    const toggle = (id) => {
+                                        setOpenId(openId === id ? null : id);
+                                    };
+
+                                    return ( <
+                                            section id = "faq"
+                                            className = { `py-20 scroll-mt-16 ${isDark ? 'bg-slate-900' : 'bg-white'}` } >
+                                            <
+                                            div className = "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8" >
+                                            <
+                                            div className = "text-center max-w-2xl mx-auto mb-14" >
+                                            <
+                                            span className = "text-indigo-600 font-semibold text-sm uppercase tracking-wider" >
+                                            FAQ <
+                                            /span> <
+                                            h2 className = { `text-3xl sm:text-4xl font-extrabold mt-1 ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                            Questions ? We 've got answers. <
+                                            /h2> <
+                                            p className = { `mt-3 text-lg ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                            Everything you need to know before getting started. <
+                                            /p> <
+                                            /div>
+
+                                            <
+                                            div className = { `rounded-2xl p-4 sm:p-6 border ${isDark ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200/60'}` } >
+                                            {
+                                                FAQS.map((faq) => ( <
+                                                    div key = { faq.id }
+                                                    className = "faq-item" >
+                                                    <
+                                                    button className = { `faq-question ${openId === faq.id ? 'open' : ''} ${isDark ? 'text-white' : ''}` }
+                                                    onClick = {
+                                                        () => toggle(faq.id) } >
+                                                    <
+                                                    span className = "text-sm sm:text-base" > { faq.q } < /span> <
+                                                    span className = "faq-icon" >
+                                                    <
+                                                    i className = { `fas ${openId === faq.id ? 'fa-chevron-up' : 'fa-chevron-down'}` } >
+                                                    < /i> <
+                                                    /span> <
+                                                    /button> <
+                                                    div className = { `faq-answer ${openId === faq.id ? 'open' : ''} ${isDark ? 'text-slate-300' : ''}` } >
+                                                    { faq.a } <
+                                                    /div> <
+                                                    /div>
+                                                ))
+                                            } <
+                                            /div> <
+                                            /div> <
+                                            /section>
+                                        );
+                                    }
+
+                                    // --- Dashboard Preview ---
+                                    function DashboardSection({ isDark }) {
+                                        const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+                                        const containerRef = useRef(null);
+                                        const [counters, setCounters] = useState({ tasks: 0, revenue: 0, team: 0, projects: 0 });
+                                        const [isInView, setIsInView] = useState(false);
+
+                                        const counterRef = useRef(null);
+
+                                        useEffect(() => {
+                                            const observer = new IntersectionObserver(
+                                                ([entry]) => {
+                                                    if (entry.isIntersecting) setIsInView(true);
+                                                }, { threshold: 0.2 }
+                                            );
+                                            if (counterRef.current) observer.observe(counterRef.current);
+                                            return () => observer.disconnect();
+                                        }, []);
+
+                                        useEffect(() => {
+                                            if (!isInView) return;
+                                            const targets = { tasks: 284, revenue: 84200, team: 12, projects: 47 };
+                                            const duration = 2000;
+                                            const steps = 60;
+                                            const interval = duration / steps;
+
+                                            Object.keys(targets).forEach((key) => {
+                                                let current = 0;
+                                                const target = targets[key];
+                                                const increment = target / steps;
+                                                const timer = setInterval(() => {
+                                                    current += increment;
+                                                    if (current >= target) {
+                                                        current = target;
+                                                        clearInterval(timer);
+                                                    }
+                                                    setCounters(prev => ({ ...prev, [key]: Math.round(current) }));
+                                                }, interval);
+                                            });
+                                        }, [isInView]);
+
+                                        const handleMouseMove = (e) => {
+                                            if (!containerRef.current) return;
+                                            const rect = containerRef.current.getBoundingClientRect();
+                                            const x = (e.clientX - rect.left) / rect.width - 0.5;
+                                            const y = (e.clientY - rect.top) / rect.height - 0.5;
+                                            setMousePosition({ x, y });
+                                        };
+
+                                        const getTransform = (depth) => {
+                                            const px = mousePosition.x * depth;
+                                            const py = mousePosition.y * depth;
+                                            return `rotateY(${px}deg) rotateX(${-py}deg)`;
+                                        };
+
+                                        const activities = [
+                                            { user: 'Sarah', action: 'completed "Q4 Report"', time: '2 min ago',
+                                            color: 'bg-emerald-500' },
+                                            { user: 'Mike', action: 'moved "Client Demo" to In Progress', time: '15 min ago',
+                                                color: 'bg-amber-500' },
+                                            { user: 'Priya', action: 'commented on "Design System"', time: '1 hour ago',
+                                                color: 'bg-purple-500' },
+                                            { user: 'Alex', action: 'created "Sprint 23" board', time: '2 hours ago',
+                                                color: 'bg-blue-500' },
+                                        ];
+
+                                        const teamMembers = [
+                                            { name: 'Sarah M.', role: 'Lead', color: 'bg-emerald-500' },
+                                            { name: 'David O.', role: 'Dev', color: 'bg-blue-500' },
+                                            { name: 'Priya N.', role: 'PM', color: 'bg-purple-500' },
+                                            { name: 'Alex K.', role: 'Design', color: 'bg-amber-500' },
+                                            { name: 'Jamie L.', role: 'Marketing', color: 'bg-pink-500' },
+                                            { name: 'Taylor S.', role: 'Dev', color: 'bg-indigo-500' },
+                                        ];
+
+                                        return ( <
+                                            section id = "dashboard"
+                                            className = { `py-20 scroll-mt-16 ${isDark ? 'bg-slate-800/50' : 'bg-slate-50'}` } >
+                                            <
+                                            div className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
+                                            <
+                                            div className = "text-center max-w-2xl mx-auto mb-16" >
+                                            <
+                                            span className = "text-indigo-600 font-semibold text-sm uppercase tracking-wider" >
+                                            Live Dashboard <
+                                            /span> <
+                                            h2 className = { `text-3xl sm:text-4xl font-extrabold mt-1 ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                            See your workspace in action <
+                                            /h2> <
+                                            p className = { `mt-3 text-lg ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                            Real - time analytics, team activity, and project insights at a glance. <
+                                            /p> <
+                                            /div>
+
+                                            <
+                                            div ref = { containerRef }
+                                            onMouseMove = { handleMouseMove }
+                                            className = "parallax-container" >
+                                            <
+                                            div className = { `dashboard-preview p-4 sm:p-6 ${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200/60'}` }
+                                            style = { { transform: getTransform(4) } } >
+                                            <
+                                            div className = "flex items-center justify-between mb-4" >
+                                            <
+                                            div className = "flex items-center gap-2" >
+                                            <
+                                            div className = "flex gap-1.5" >
+                                            <
+                                            span className = "w-3 h-3 bg-red-500 rounded-full" > < /span> <
+                                            span className = "w-3 h-3 bg-yellow-500 rounded-full" > < /span> <
+                                            span className = "w-3 h-3 bg-green-500 rounded-full" > < /span> <
+                                            /div> <
+                                            span className = { `text-xs font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                            FlowStack Dashboard <
+                                            /span> <
+                                            /div> <
+                                            div className = "flex items-center gap-2" >
+                                            <
+                                            span className = "notif-dot" > < /span> <
+                                            span className = { `text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                            3 new notifications <
+                                            /span> <
+                                            /div> <
+                                            /div>
+
+                                            <
+                                            div className = "grid grid-cols-2 md:grid-cols-4 gap-3 mb-4" >
+                                            <
+                                            div className = { `dashboard-card ${isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'}` } >
+                                            <
+                                            p className = { `text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}` } > Total Tasks <
+                                            /p> <
+                                            p className = "text-2xl font-bold text-indigo-600 dark:text-indigo-400" >
+                                            { counters.tasks } <
+                                            /p> <
+                                            p className = { `text-xs ${isDark ? 'text-emerald-400' : 'text-emerald-600'}` } >
+                                            <
+                                            i className = "fas fa-arrow-up mr-0.5" > < /i> 12% this week <
+                                            /p> <
+                                            /div> <
+                                            div className = { `dashboard-card ${isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'}` } >
+                                            <
+                                            p className = { `text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}` } > Revenue <
+                                            /p> <
+                                            p className = "text-2xl font-bold text-emerald-600 dark:text-emerald-400" >
+                                            $ { counters.revenue.toLocaleString() } <
+                                            /p> <
+                                            p className = { `text-xs ${isDark ? 'text-emerald-400' : 'text-emerald-600'}` } >
+                                            <
+                                            i className = "fas fa-arrow-up mr-0.5" > < /i> 18% MoM <
+                                            /p> <
+                                            /div> <
+                                            div className = { `dashboard-card ${isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'}` } >
+                                            <
+                                            p className = { `text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}` } > Team Members <
+                                            /p> <
+                                            p className = "text-2xl font-bold text-purple-600 dark:text-purple-400" >
+                                            { counters.team } <
+                                            /p> <
+                                            p className = { `text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                            <
+                                            i className = "fas fa-users mr-0.5" > < /i> 6 online now <
+                                            /p> <
+                                            /div> <
+                                            div className = { `dashboard-card ${isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'}` } >
+                                            <
+                                            p className = { `text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}` } > Active Projects <
+                                            /p> <
+                                            p className = "text-2xl font-bold text-amber-600 dark:text-amber-400" >
+                                            { counters.projects } <
+                                            /p> <
+                                            p className = { `text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                            <
+                                            i className = "fas fa-check-circle mr-0.5" > < /i> 12 completed <
+                                            /p> <
+                                            /div> <
+                                            /div>
+
+                                            <
+                                            div className = "grid grid-cols-1 md:grid-cols-3 gap-4" >
+                                            <
+                                            div className = "md:col-span-2" >
+                                            <
+                                            div className = { `dashboard-card ${isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'}` } >
+                                            <
+                                            div className = "flex items-center justify-between mb-3" >
+                                            <
+                                            h4 className = { `text-sm font-semibold ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                            <
+                                            i className = "fas fa-chart-bar text-indigo-500 mr-1.5" > < /i> Weekly Activity <
+                                            /h4> <
+                                            span className = { `text-xs ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                            Last 7 days <
+                                            /span> <
+                                            /div> <
+                                            div className = "flex items-end justify-between h-24 gap-1.5" >
+                                            <
+                                            div className = "flex flex-col items-center flex-1" >
+                                            <
+                                            div className = "chart-bar animate w-full rounded-sm bg-indigo-400 dark:bg-indigo-500"
+                                            style = { { '--height': '60%', height: '60%' } } > < /div> <
+                                            span className = { `text-[10px] mt-1 ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                            Mon <
+                                            /span> <
+                                            /div> <
+                                            div className = "flex flex-col items-center flex-1" >
+                                            <
+                                            div className = "chart-bar animate w-full rounded-sm bg-indigo-400 dark:bg-indigo-500"
+                                            style = { { '--height': '40%', height: '40%' } } > < /div> <
+                                            span className = { `text-[10px] mt-1 ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                            Tue <
+                                            /span> <
+                                            /div> <
+                                            div className = "flex flex-col items-center flex-1" >
+                                            <
+                                            div className = "chart-bar animate w-full rounded-sm bg-indigo-500 dark:bg-indigo-400"
+                                            style = { { '--height': '75%', height: '75%' } } > < /div> <
+                                            span className = { `text-[10px] mt-1 ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                            Wed <
+                                            /span> <
+                                            /div> <
+                                            div className = "flex flex-col items-center flex-1" >
+                                            <
+                                            div className = "chart-bar animate w-full rounded-sm bg-indigo-400 dark:bg-indigo-500"
+                                            style = { { '--height': '50%', height: '50%' } } > < /div> <
+                                            span className = { `text-[10px] mt-1 ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                            Thu <
+                                            /span> <
+                                            /div> <
+                                            div className = "flex flex-col items-center flex-1" >
+                                            <
+                                            div className = "chart-bar animate w-full rounded-sm bg-indigo-600 dark:bg-indigo-300"
+                                            style = { { '--height': '90%', height: '90%' } } > < /div> <
+                                            span className = { `text-[10px] mt-1 ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                            Fri <
+                                            /span> <
+                                            /div> <
+                                            div className = "flex flex-col items-center flex-1" >
+                                            <
+                                            div className = "chart-bar animate w-full rounded-sm bg-indigo-400 dark:bg-indigo-500"
+                                            style = { { '--height': '35%', height: '35%' } } > < /div> <
+                                            span className = { `text-[10px] mt-1 ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                            Sat <
+                                            /span> <
+                                            /div> <
+                                            div className = "flex flex-col items-center flex-1" >
+                                            <
+                                            div className = "chart-bar animate w-full rounded-sm bg-indigo-300 dark:bg-indigo-600"
+                                            style = { { '--height': '25%', height: '25%' } } > < /div> <
+                                            span className = { `text-[10px] mt-1 ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                            Sun <
+                                            /span> <
+                                            /div> <
+                                            /div> <
+                                            /div> <
+                                            /div>
+
+                                            <
+                                            div className = "space-y-3" >
+                                            <
+                                            div className = { `dashboard-card ${isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'}` } >
+                                            <
+                                            h4 className = { `text-sm font-semibold mb-2 ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                            <
+                                            i className = "fas fa-bell text-indigo-500 mr-1.5" > < /i> Notifications <
+                                            /h4> <
+                                            div className = "space-y-1.5" >
+                                            <
+                                            div className = { `text-xs flex items-start gap-2 ${isDark ? 'text-slate-300' : 'text-slate-600'}` } >
+                                            <
+                                            span className = "text-emerald-500" > ● < /span> <
+                                            span > Sarah completed "Q4 Report" < /span> <
+                                            /div> <
+                                            div className = { `text-xs flex items-start gap-2 ${isDark ? 'text-slate-300' : 'text-slate-600'}` } >
+                                            <
+                                            span className = "text-amber-500" > ● < /span> <
+                                            span > Mike moved "Client Demo" to In Progress < /span> <
+                                            /div> <
+                                            div className = { `text-xs flex items-start gap-2 ${isDark ? 'text-slate-300' : 'text-slate-600'}` } >
+                                            <
+                                            span className = "text-purple-500" > ● < /span> <
+                                            span > Priya commented on "Design System" < /span> <
+                                            /div> <
+                                            div className = { `text-xs flex items-start gap-2 ${isDark ? 'text-slate-300' : 'text-slate-600'}` } >
+                                            <
+                                            span className = "text-blue-500" > ● < /span> <
+                                            span > Alex created "Sprint 23" board < /span> <
+                                            /div> <
+                                            /div> <
+                                            /div>
+
+                                            <
+                                            div className = { `dashboard-card ${isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'}` } >
+                                            <
+                                            h4 className = { `text-sm font-semibold mb-2 ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                            <
+                                            i className = "fas fa-users text-indigo-500 mr-1.5" > < /i> Team Online <
+                                            /h4> <
+                                            div className = "flex flex-wrap gap-1.5" > {
+                                                teamMembers.map((m, i) => ( <
+                                                    div key = { i }
+                                                    className = "flex items-center gap-1.5 bg-slate-100 dark:bg-slate-700 rounded-full px-2.5 py-1" >
+                                                    <
+                                                    div className = { `w-2 h-2 rounded-full ${m.color}` } > < /div> <
+                                                    span className = { `text-xs ${isDark ? 'text-slate-300' : 'text-slate-600'}` } >
+                                                    { m.name } <
+                                                    /span> <
+                                                    /div>
+                                                ))
+                                            } <
+                                            /div> <
+                                            /div> <
+                                            /div> <
+                                            /div>
+
+                                            <
+                                            div className = "mt-3 grid grid-cols-1 md:grid-cols-2 gap-3" >
+                                            <
+                                            div className = { `dashboard-card ${isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'}` } >
+                                            <
+                                            h4 className = { `text-sm font-semibold mb-2 ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                            <
+                                            i className = "fas fa-clock text-indigo-500 mr-1.5" > < /i> Recent Activity <
+                                            /h4> <
+                                            div className = "space-y-1.5" > {
+                                                activities.map((act, i) => ( <
+                                                    div key = { i }
+                                                    className = { `activity-item flex items-center gap-2.5 ${isDark ? 'border-slate-700' : ''}` } >
+                                                    <
+                                                    div className = { `avatar ${act.color}` } >
+                                                    { act.user[0] } <
+                                                    /div> <
+                                                    div className = "flex-1 min-w-0" >
+                                                    <
+                                                    p className = { `text-xs truncate ${isDark ? 'text-slate-300' : 'text-slate-600'}` } >
+                                                    < span className = "font-medium" > { act.user } < /span> { act.action } <
+                                                    /p> <
+                                                    p className = { `text-[10px] ${isDark ? 'text-slate-500' : 'text-slate-400'}` } >
+                                                    { act.time } <
+                                                    /p> <
+                                                    /div> <
+                                                    /div>
+                                                ))
+                                            } <
+                                            /div> <
+                                            /div>
+
+                                            <
+                                            div className = { `dashboard-card ${isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'}` } >
+                                            <
+                                            h4 className = { `text-sm font-semibold mb-2 ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                            <
+                                            i className = "fas fa-chart-pie text-indigo-500 mr-1.5" > < /i> Project Distribution <
+                                            /h4> <
+                                            div className = "space-y-1.5" >
+                                            <
+                                            div className = "flex items-center justify-between text-xs" >
+                                            <
+                                            span className = { isDark ? 'text-slate-300' : 'text-slate-600' } > Design < /span> <
+                                            div className = "flex items-center gap-2 flex-1 mx-2" >
+                                            <
+                                            div className = "h-1.5 rounded-full bg-indigo-500 w-[45%]" > < /div> <
+                                            /div> <
+                                            span className = { isDark ? 'text-slate-400' : 'text-slate-500' } > 45 % < /span> <
+                                            /div> <
+                                            div className = "flex items-center justify-between text-xs" >
+                                            <
+                                            span className = { isDark ? 'text-slate-300' : 'text-slate-600' } > Development < /span> <
+                                            div className = "flex items-center gap-2 flex-1 mx-2" >
+                                            <
+                                            div className = "h-1.5 rounded-full bg-emerald-500 w-[30%]" > < /div> <
+                                            /div> <
+                                            span className = { isDark ? 'text-slate-400' : 'text-slate-500' } > 30 % < /span> <
+                                            /div> <
+                                            div className = "flex items-center justify-between text-xs" >
+                                            <
+                                            span className = { isDark ? 'text-slate-300' : 'text-slate-600' } > Marketing < /span> <
+                                            div className = "flex items-center gap-2 flex-1 mx-2" >
+                                            <
+                                            div className = "h-1.5 rounded-full bg-amber-500 w-[15%]" > < /div> <
+                                            /div> <
+                                            span className = { isDark ? 'text-slate-400' : 'text-slate-500' } > 15 % < /span> <
+                                            /div> <
+                                            div className = "flex items-center justify-between text-xs" >
+                                            <
+                                            span className = { isDark ? 'text-slate-300' : 'text-slate-600' } > Operations < /span> <
+                                            div className = "flex items-center gap-2 flex-1 mx-2" >
+                                            <
+                                            div className = "h-1.5 rounded-full bg-purple-500 w-[10%]" > < /div> <
+                                            /div> <
+                                            span className = { isDark ? 'text-slate-400' : 'text-slate-500' } > 10 % < /span> <
+                                            /div> <
+                                            /div> <
+                                            /div> <
+                                            /div> <
+                                            /div> <
+                                            /div> <
+                                            /div> <
+                                            /section>
+                                        );
+                                    }
+
+                                    // --- AI Demo Section ---
+                                    function AIDemoSection({ isDark }) {
+                                        const [messages, setMessages] = useState([
+                                            { from: 'ai', text: '👋 Hi! I\'m your FlowStack AI assistant. Ask me about sales, revenue, tasks, team, or deadlines!' }
+                                        ]);
+                                        const [input, setInput] = useState('');
+                                        const [isTyping, setIsTyping] = useState(false);
+                                        const chatEndRef = useRef(null);
+
+                                        const scrollToBottom = () => {
+                                            chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+                                        };
+
+                                        useEffect(() => {
+                                            scrollToBottom();
+                                        }, [messages]);
+
+                                        const handleSend = () => {
+                                            if (!input.trim()) return;
+                                            const userMsg = input.trim();
+                                            setMessages(prev => [...prev, { from: 'user', text: userMsg }]);
+                                            setInput('');
+                                            setIsTyping(true);
+
+                                            setTimeout(() => {
+                                                const lower = userMsg.toLowerCase();
+                                                let reply = DEFAULT_AI_RESPONSE;
+                                                for (const [key, value] of Object.entries(AI_RESPONSES)) {
+                                                    if (lower.includes(key)) {
+                                                        reply = value;
+                                                        break;
+                                                    }
+                                                }
+                                                setMessages(prev => [...prev, { from: 'ai', text: reply }]);
+                                                setIsTyping(false);
+                                            }, 800 + Math.random() * 600);
+                                        };
+
+                                        const quickQuestions = ['Sales today', 'Revenue', 'Team status', 'Tasks pending',
+                                            'Deadlines'
+                                        ];
+
+                                        return ( <
+                                            section id = "ai"
+                                            className = { `py-20 scroll-mt-16 ${isDark ? 'bg-slate-900' : 'bg-white'}` } >
+                                            <
+                                            div className = "max-w-4xl mx-auto px-4 sm:px-6 lg:px-8" >
+                                            <
+                                            div className = "text-center max-w-2xl mx-auto mb-14" >
+                                            <
+                                            span className = "text-indigo-600 font-semibold text-sm uppercase tracking-wider" >
+                                            <
+                                            i className = "fas fa-robot mr-1.5" > < /i> AI Assistant <
+                                            /span> <
+                                            h2 className = { `text-3xl sm:text-4xl font-extrabold mt-1 ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                            Ask our AI Assistant <
+                                            /h2> <
+                                            p className = { `mt-3 text-lg ${isDark ? 'text-slate-400' : 'text-slate-500'}` } >
+                                            Get instant answers about your projects, team, and performance. <
+                                            /p> <
+                                            /div>
+
+                                            <
+                                            div className = { `ai-chat-area ${isDark ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200/60'}` } >
+                                            <
+                                            div className = "flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-700" >
+                                            <
+                                            div className = "flex items-center gap-2" >
+                                            <
+                                            div className = "w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-sm font-bold" >
+                                            AI <
+                                            /div> <
+                                            div >
+                                            <
+                                            p className = { `text-sm font-semibold ${isDark ? 'text-white' : 'text-slate-800'}` } >
+                                            FlowStack AI <
+                                            /p> <
+                                            p className = { `text-xs ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                            Online · Ready to help <
+                                            /p> <
+                                            /div> <
+                                            /div> <
+                                            div className = "flex items-center gap-1" >
+                                            <
+                                            span className = "w-2 h-2 rounded-full bg-emerald-500" > < /span> <
+                                            span className = { `text-xs ${isDark ? 'text-slate-400' : 'text-slate-400'}` } >
+                                            Active <
+                                            /span> <
+                                            /div> <
+                                            /div>
+
+                                            <
+                                            div className = "h-64 overflow-y-auto p-4 space-y-3" >
+                                            {
+                                                messages.map((msg, idx) => ( <
+                                                    div key = { idx }
+                                                    className = { `flex ${msg.from === 'user' ? 'justify-end' : 'justify-start'}` } >
+                                                    <
+                                                    div className = { msg.from === 'user' ? 'ai-chat-bubble-user' :
+                                                                'ai-chat-bubble-ai' }
+                                                    dangerouslySetInnerHTML = { { __html: msg.text } } >
+                                                    < /div> <
+                                                    /div>
+                                                ))
+                                            } {
+                                                isTyping && ( <
+                                                    div className = "flex justify-start" >
+                                                    <
+                                                    div className = "ai-chat-bubble-ai" >
+                                                    <
+                                                    div className = "typing-dots flex gap-1" >
+                                                    <
+                                                    span > < /span> <
+                                                    span > < /span> <
+                                                    span > < /span> <
+                                                    /div> <
+                                                    /div> <
+                                                    /div>
+                                                )
+                                            } <
+                                            div ref = { chatEndRef } > < /div> <
+                                            /div>
+
+                                            <
+                                            div className = "p-4 border-t border-slate-200 dark:border-slate-700" >
+                                            <
+                                            div className = "flex flex-wrap gap-1.5 mb-3" > {
+                                                quickQuestions.map((q, i) => ( <
+                                                    button key = { i }
+                                                    onClick = {
+                                                        () => { setInput(q);
+                                                            setTimeout(handleSend, 100); } }
+                                                    className = { `text-xs px-3 py-1.5 rounded-full transition ${isDark ?
+                                                                'bg-slate-700 text-slate-300 hover:bg-slate-600' :
+                                                                'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                                                            }` } >
+                                                    { q } <
+                                                    /button>
+                                                ))
+                                            } <
+                                            /div> <
+                                            div className = "flex gap-2" >
+                                            <
+                                            input type = "text"
+                                            value = { input }
+                                            onChange = {
+                                                (e) => setInput(e.target.value) }
+                                            onKeyDown = {
+                                                (e) => e.key === 'Enter' && handleSend() }
+                                            placeholder = "Ask about sales, revenue, tasks..."
+                                            className = { `flex-1 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${isDark ?
+                                                        'bg-slate-700 text-white border-slate-600 placeholder-slate-400' :
+                                                        'bg-white text-slate-800 border-slate-200 placeholder-slate-400'
+                                                    } border` }
+                                            /> <
+                                            button onClick = { handleSend }
+                                            className = "bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-indigo-700 transition shadow-md shadow-indigo-200 dark:shadow-indigo-900/30 flex items-center gap-2" >
+                                            <
+                                            i className = "fas fa-paper-plane" > < /i> Send <
+                                            /button> <
+                                            /div> <
+                                            /div> <
+                                            /div> <
+                                            /div> <
+                                            /section>
+                                        );
+                                    }
+
+                                    // --- CTA Section ---
+                                    function CTASection({ isDark }) {
+                                        return ( <
+                                            section className = { `cta-gradient py-20 ${isDark ? '' : ''}` } >
+                                            <
+                                            div className = "max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" >
+                                            <
+                                            h2 className = "text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight" >
+                                            Ready to bring order to your projects ? <
+                                            /h2> <
+                                            p className = "text-slate-300 text-lg sm:text-xl mt-4 max-w-xl mx-auto" >
+                                            Join 12, 000 + teams already using FlowStack to ship better, faster. <
+                                            /p> <
+                                            div className = "flex flex-wrap justify-center gap-4 mt-8" >
+                                            <
+                                            button onClick = {
+                                                () => document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' }) }
+                                            className = "bg-indigo-500 text-white px-10 py-4 rounded-full font-semibold hover:bg-indigo-600 transition shadow-lg shadow-indigo-500/30 flex items-center gap-2 text-lg" >
+                                            <
+                                            i className = "fas fa-rocket" > < /i> Start Your Free Trial <
+                                            /button> <
+                                            button className = "bg-white/10 text-white px-8 py-4 rounded-full font-medium hover:bg-white/20 transition border border-white/20 backdrop-blur-sm flex items-center gap-2 text-lg" >
+                                            <
+                                            i className = "fas fa-phone" > < /i> Contact Sales <
+                                            /button> <
+                                            /div> <
+                                            p className = "text-slate-400 text-sm mt-5" >
+                                            <
+                                            i className = "fas fa-check-circle text-indigo-400 mr-1.5" > < /i>
+                                            No credit card required · 14 - day free trial · Cancel anytime <
+                                            /p> <
+                                            /div> <
+                                            /section>
+                                        );
+                                    }
+
+                                    // --- Footer ---
+                                    function Footer({ isDark }) {
+                                        return ( <
+                                            footer className = { `footer ${isDark ? 'bg-slate-900' : 'bg-slate-900'}` } >
+                                            <
+                                            div className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" >
+                                            <
+                                            div className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12" >
+                                            <
+                                            div className = "lg:col-span-2" >
+                                            <
+                                            div className = "flex items-center gap-2.5 mb-4" >
+                                            <
+                                            Logo / >
+                                            <
+                                            span className = "text-xl font-extrabold text-white tracking-tight" >
+                                            Flow < span className = "text-indigo-400" > Stack < /span> <
+                                            /span> <
+                                            /div> <
+                                            p className = "text-slate-400 text-sm leading-relaxed max-w-sm" >
+                                            The project management tool that actually makes work feel good.
+                                            Built for teams who want to ship faster without the chaos. <
+                                            /p> <
+                                            div className = "flex gap-3 mt-4" >
+                                            <
+                                            a href = "#"
+                                            className = "w-9 h-9 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-600 transition" >
+                                            <
+                                            i className = "fab fa-twitter" > < /i> <
+                                            /a> <
+                                            a href = "#"
+                                            className = "w-9 h-9 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-600 transition" >
+                                            <
+                                            i className = "fab fa-linkedin-in" > < /i> <
+                                            /a> <
+                                            a href = "#"
+                                            className = "w-9 h-9 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-600 transition" >
+                                            <
+                                            i className = "fab fa-github" > < /i> <
+                                            /a> <
+                                            a href = "#"
+                                            className = "w-9 h-9 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-600 transition" >
+                                            <
+                                            i className = "fab fa-youtube" > < /i> <
+                                            /a> <
+                                            /div> <
+                                            /div>
+
+                                            <
+                                            div >
+                                            <
+                                            h4 className = "text-white font-semibold mb-4 text-sm" > Product < /h4> <
+                                            ul className = "space-y-2.5 text-sm" >
+                                            <
+                                            li > < a href = "#features"
+                                            className = "hover:text-white transition" > Features < /a></li >
+                                            <
+                                            li > < a href = "#pricing"
+                                            className = "hover:text-white transition" > Pricing < /a></li >
+                                            <
+                                            li > < a href = "#"
+                                            className = "hover:text-white transition" > Integrations < /a></li >
+                                            <
+                                            li > < a href = "#"
+                                            className = "hover:text-white transition" > Changelog < /a></li >
+                                            <
+                                            /ul> <
+                                            /div>
+
+                                            <
+                                            div >
+                                            <
+                                            h4 className = "text-white font-semibold mb-4 text-sm" > Company < /h4> <
+                                            ul className = "space-y-2.5 text-sm" >
+                                            <
+                                            li > < a href = "#"
+                                            className = "hover:text-white transition" > About < /a></li >
+                                            <
+                                            li > < a href = "#"
+                                            className = "hover:text-white transition" > Careers < /a></li >
+                                            <
+                                            li > < a href = "#"
+                                            className = "hover:text-white transition" > Blog < /a></li >
+                                            <
+                                            li > < a href = "#"
+                                            className = "hover:text-white transition" > Contact < /a></li >
+                                            <
+                                            /ul> <
+                                            /div>
+
+                                            <
+                                            div >
+                                            <
+                                            h4 className = "text-white font-semibold mb-4 text-sm" > Legal < /h4> <
+                                            ul className = "space-y-2.5 text-sm" >
+                                            <
+                                            li > < a href = "#"
+                                            className = "hover:text-white transition" > Privacy < /a></li >
+                                            <
+                                            li > < a href = "#"
+                                            className = "hover:text-white transition" > Terms < /a></li >
+                                            <
+                                            li > < a href = "#"
+                                            className = "hover:text-white transition" > Security < /a></li >
+                                            <
+                                            li > < a href = "#"
+                                            className = "hover:text-white transition" > Cookies < /a></li >
+                                            <
+                                            /ul> <
+                                            /div> <
+                                            /div>
+
+                                            <
+                                            div className = "border-t border-slate-800/70 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-slate-500" >
+                                            <
+                                            p > & copy; 2026 FlowStack.All rights reserved. < /p> <
+                                            div className = "flex gap-6 mt-3 sm:mt-0" >
+                                            <
+                                            a href = "#"
+                                            className = "hover:text-white transition" > Privacy Policy < /a> <
+                                            a href = "#"
+                                            className = "hover:text-white transition" > Terms of Service < /a> <
+                                            /div> <
+                                            /div> <
+                                            /div> <
+                                            /footer>
+                                        );
+                                    }
+
+                                    // ============================================================
+                                    //  APP
+                                    // ============================================================
+                                    function App() {
+                                        const [scrollY, setScrollY] = useState(0);
+                                        const [isDark, setIsDark] = useState(false);
+
+                                        useEffect(() => {
+                                            const onScroll = () => setScrollY(window.scrollY);
+                                            window.addEventListener('scroll', onScroll, { passive: true });
+                                            return () => window.removeEventListener('scroll', onScroll);
+                                        }, []);
+
+                                        useEffect(() => {
+                                            if (isDark) {
+                                                document.body.classList.add('dark-mode');
+                                            } else {
+                                                document.body.classList.remove('dark-mode');
+                                            }
+                                        }, [isDark]);
+
+                                        const toggleDark = () => setIsDark(!isDark);
+
+                                        return ( <
+                                            div className = "min-h-screen" >
+                                            <
+                                            Navbar scrollY = { scrollY }
+                                            isDark = { isDark }
+                                            toggleDark = { toggleDark }
+                                            /> <
+                                            Hero isDark = { isDark }
+                                            /> <
+                                            LogoCloud isDark = { isDark }
+                                            /> <
+                                            FeaturesSection isDark = { isDark }
+                                            /> <
+                                            HowItWorks isDark = { isDark }
+                                            /> <
+                                            PricingSection isDark = { isDark }
+                                            /> <
+                                            TestimonialsSection isDark = { isDark }
+                                            /> { /* FIX: Added missing FAQSection */ } <
+                                            FAQSection isDark = { isDark }
+                                            /> <
+                                            DashboardSection isDark = { isDark }
+                                            /> <
+                                            AIDemoSection isDark = { isDark }
+                                            /> <
+                                            CTASection isDark = { isDark }
+                                            /> <
+                                            Footer isDark = { isDark }
+                                            /> <
+                                            /div>
+                                        );
+                                    }
+
+                                    // ============================================================
+                                    //  RENDER
+                                    // ============================================================
+                                    const root = ReactDOM.createRoot(document.getElementById('root'));
+                                    root.render( < App / > );
+    </script>
+
+</body>
+</html>
